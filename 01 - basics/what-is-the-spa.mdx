@@ -1,0 +1,80 @@
+---
+title: "SPA Nedir?"
+description: "SPA (Single Page Application) kavramını anlatıyorum."
+date: "2025-12-05"
+author: "Poyraz Avsever"
+level: "beginner"
+category: "Angular Basics"
+tags:
+  - angular
+  - topic
+  - learning
+  - guide
+  - spa
+---
+
+### SPA Nedir?      
+
+SPA, ya da Single Page Application en basit haliyle tek bir HTML sayfası üzerinde çalışan web uygulamasıdır. 
+
+Normalde web sitelerinde/uygulamalarında sayfalar arasında geçiş yaparken her seferinde sunucudan yeni bir HTML sayfası isteriz. Ve her defasında HTML dosyasının içerisndeki CSS ve JavaScript dosyaları da yeniden yüklenir. Fakaat SPA dediğimiz bu arkadaşlarda ise tek bir HTML sayfası yüklenir ve sonrasında geçişler JavaScript ile yapılır.
+
+### Örnek:
+
+Normalde 3 html dosyası düşünelim:
+- index.html
+- about.html
+- contact.html
+
+Kullanıcı index.html sayfasındayken hakkında linkine tıkladığında about.html sayfasına yönlendirilir. Bu durumda tarayıcı sunucuya bir istek gönderir ve about.html dosyasını indirtir. Aynı şekilde contact.html sayfasına geçişte de aynı işlem gerçekleşiyor.
+
+Multipage index.html:
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ana sayfa</title>
+</head>
+<body>
+    <h1>ana sayfa</h1>
+    <a href="about.html">hakkında</a>
+    <a href="contact.html">iletişim</a>
+</body>
+</html>
+```
+SPA index.html:
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPA örneği</title>
+    <script>
+        function navigate(page) {
+            const content = document.getElementById('content');
+            if (page === 'home') {
+                content.innerHTML = '<h1>Ana Sayfa</h1><p>Bura ana sayfa içeriği gelecek.</p>';
+            } else if (page === 'about') {
+                content.innerHTML = '<h1>Hakkında</h1><p>Bura hakkında sayfası içeriği gelecek.</p>';
+            } else if (page === 'contact') {
+                content.innerHTML = '<h1>İletişim</h1><p>Bura iletişim sayfası içeriği gelecek.</p>';
+            }
+        }
+    </script>
+</head>
+<body onload="navigate('home')">
+    <nav>
+        <a href="#" onclick="navigate('home')">Ana Sayfa</a>
+        <a href="#" onclick="navigate('about')">Hakkında</a>
+        <a href="#" onclick="navigate('contact')">İletişim</a>
+    </nav>
+    <div id="content"></div>
+</body>
+</html>
+```
+
+
+Yukarıdaki SPA örneğinde tek bir HTML dosyası var ve sayfa içeriği JavaScript ile dinamik olarak değiştiriliyor. Kullanıcı linklere tıkladığında yeni bir sayfa yüklenmiyor, sadece içerik değişiyor. Bu sayede kullanıcı deneyimi daha akıcı hale geliyor çünkü sayfa yeniden yüklenmediği için bekleme süreleri azalıyor. Ayrıca, sunucuya yapılan istek sayısı da azalıyor, bu da performansı artırıyor.
