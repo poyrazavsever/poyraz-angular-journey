@@ -1,0 +1,69 @@
+---
+title: "Angular Nedir?"
+description: "Angular nedir peki?"
+date: "2025-12-05"
+author: "Poyraz Avsever"
+level: "beginner"
+category: "Angular Basics"
+tags:
+  - angular
+  - topic
+  - learning
+  - guide
+  - node
+---
+
+### Angular Nedir?
+Angular, Google tarafından geliştirilen, sürdürülen ve sanırım 6'ay da bir güncelleme alan açık kaynaklı bir web uygulama frameworktür.
+
+Angular, özellikle tek sayfa uygulamaları (SPA - Single Page Applications) geliştirmek için kullanılır. TypeScript ile yazılmıştır ve bileşen tabanlı mimarisi sayesinde yeniden kullanılabilir, modüler ve test edilebilir kod yazmayı kolaylaştırır.
+
+
+### Angular Kurmak
+Angular projeleri oluşturmak, geliştirmek ve dağıtmak için Node.js gereklidir. Angular CLI (Command Line Interface - Komut Satırı Arayüzü) gibi araçlar, Node.js üzerinde çalışır ve projelerinizi yönetmenize yardımcı olur. Ayrıca, Angular uygulamalarını derlemek ve paketlemek için de Node.js kullanılır.
+
+Angular CLI'yi yüklemek için terminal veya komut istemcisinde aşağıdaki komutu çalıştırabilirsiniz:
+
+```bash
+npm install -g @angular/cli
+```
+
+### Angular Proje oluşturmak
+Angular CLI yüklendikten sonra, yeni bir Angular projesi oluşturmak için terminalde aşağıdaki komutu kullanabilirsiniz:
+
+```bash
+ng new first-app
+```
+
+### Angular Klasör Yapısı
+Bu komut, `first-app` adlı yeni bir Angular projesi oluşturur ve gerekli dosya ve klasör yapısını otomatik olarak ayarlar.
+
+Proje yapısı şöyledir:
+
+```
+first-app/
+├── e2e/                     # Uçtan uca testler için klasör
+├── node_modules/            # Proje bağımlılıkları
+├── src/                     # Uygulama kaynak kodları
+│   ├── app/                 # Uygulama bileşenleri ve modülleri
+│   ├── assets/              # Statik varlıklar (resimler, stiller vb.)
+│   ├── environments/        # Farklı ortamlar için yapılandırmalar
+│   ├── index.html           # Ana HTML dosyası
+│   ├── main.ts              # Uygulama başlangıç noktası
+│   ├── styles.css           # Global stil dosyası
+│   └── ...                  # Diğer kaynak dosyaları
+├── angular.json             # Angular proje yapılandırma dosyası
+├── package.json             # Proje bağımlılıkları ve betikler
+├── tsconfig.json            # TypeScript yapılandırma dosyası
+└── ...                      # Diğer yapılandırma dosyaları
+```
+
+### Projeyi Ayağa Kaldırmak
+Projeyi oluşturduktan sonra, proje dizinine gidip Angular geliştirme sunucusunu başlatabilirsiniz:
+
+```bash
+cd first-app
+ng serve
+```
+
+Ahanda bu kadar! Görüşüüüüüz 🙋🏻‍♂️!
