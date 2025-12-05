@@ -9,4 +9,8 @@ import { Component, ViewEncapsulation } from "@angular/core";
     encapsulation: ViewEncapsulation.None // Bu ayar, stil kapsülleme stratejisini belirler.
 })
 
-export class AboutComponent {}
+export class AboutComponent {
+    clickMe() {
+        alert('About component butonuna tıklandı!');
+    }
+}
