@@ -29,3 +29,18 @@ Angular'da dört ana binding türü vardır:
 Event Binding, kullanıcı etkileşimlerini (örneğin, tıklamalar, klavye girişleri) bileşenlere bağlamak için kullanılır. Bu, kullanıcı eylemlerine yanıt vermek için idealdir. Aynı commit içersinde örneği var.
 
 
+#### 2. Interpolation (Ara Değerleme)
+Interpolation, bileşen verilerini HTML şablonunda görüntülemek için kullanılır. Örneğin, bir bileşen özelliğini HTML içinde göstermek için çift süslü parantezler kullanılır: `{{ propertyName }}`.
+
+#### 3. Property Binding (Özellik Bağlama)
+Property Binding, HTML elementlerinin özelliklerini bileşen verilerine bağlamak için kullanılır. Örneğin, bir butonun `disabled` özelliğini bir bileşen özelliesine bağlayabilirsiniz: `<button [disabled]="isDisabled">Click Me</button>`.
+
+#### 4. Two-Way Binding (Çift Yönlü Bağlama)
+Two-Way Binding, bileşen verileri ile HTML elementleri arasında çift yönlü veri akışını sağlar. Bu, kullanıcı girişlerinin bileşen verilerini otomatik olarak güncellemesini sağlar. Angular'da bu, `ngModel` direktifi kullanılarak yapılır:
+```html
+<input [(ngModel)]="propertyName" />
+```
+
+### Özet
+Binding, Angular uygulamalarında veri ve kullanıcı arayüzü bileşenleri arasında etkileşim kurmanın temel yoludur. Event Binding, Interpolation, Property Binding ve Two-Way Binding gibi farklı yöntemler, uygulamanızın ihtiyaçlarına göre veri akışını yönetmenizi sağlar. Bu yöntemleri doğru kullanarak, dinamik ve etkileşimli web uygulamaları geliştirebilirsiniz.
+
