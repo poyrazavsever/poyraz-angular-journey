@@ -1,0 +1,50 @@
+<div class="todo-container">
+  <h1>📝 Todo Uygulaması</h1>
+
+  <!-- Yeni todo ekleme formu -->
+  <div class="todo-input-container">
+    <input
+      type="text"
+      class="todo-input"
+      placeholder="Ne yapacaksın?"
+      [(ngModel)]="newTodoText"
+      (keyup.enter)="addTodo()"
+    />
+    <button class="add-button" (click)="addTodo()">Ekle</button>
+  </div>
+
+  <!-- Filtre butonları -->
+  <div class="filters">
+    <button [class.active]="filter() === 'all'" (click)="setFilter('all')">Hepsi</button>
+    <button [class.active]="filter() === 'active'" (click)="setFilter('active')">Aktif</button>
+    <button [class.active]="filter() === 'completed'" (click)="setFilter('completed')">
+      Tamamlanan
+    </button>
+  </div>
+
+  <!-- Todo listesi -->
+  <ul class="todo-list">
+    @for (todo of filteredTodos(); track todo.id) {
+    <li class="todo-item" [class.completed]="todo.completed">
+      <input
+        type="checkbox"
+        [checked]="todo.completed"
+        (change)="toggleTodo(todo.id)"
+        class="checkbox"
+      />
+      <span class="todo-text">{{ todo.text }}</span>
+      <button class="delete-button" (click)="deleteTodo(todo.id)">❌</button>
+    </li>
+    } @empty {
+    <li class="empty-message">Henüz todo yok! 🎉</li>
+    }
+  </ul>
+
+  <!-- Alt bilgi -->
+  <div class="footer">
+    <span class="todo-count"> {{ activeCount() }} aktif görev </span>
+    @if (todos().length > filteredTodos().length) {
+    <button class="clear-button" (click)="clearCompleted()">Tamamlananları Temizle</button>
+    }
+  </div>
+</div>

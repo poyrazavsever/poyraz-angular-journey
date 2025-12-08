@@ -1,0 +1,662 @@
+---
+title: "Beraber Todo-APP Yapalım!"
+description: "Angular'ın temel kavramlarını öğrenirken basit bir Todo uygulaması geliştireceğiz. Component yapısı, Signals, template syntax, event binding, two-way binding ve directives gibi konuları ele alacağız."
+date: "2025-12-08"
+author: "Poyraz Avsever"
+level: "beginner"
+category: "Angular Basics"
+tags:
+  - angular
+  - topic
+  - learning
+  - guide
+  - todo
+  - signals
+  - component
+  - template-syntax
+  - event-binding
+  - two-way-binding
+  - directives
+---
+
+
+# Angular Todo Uygulaması Rehberi
+
+Bu rehberde, Angular'ın temel kavramlarını adım adım öğrenirken basit bir Todo uygulaması geliştireceğiz.
+
+## İçindekiler
+
+1. [Angular Nedir?](#angular-nedir)
+2. [Component Yapısı](#component-yapısı)
+3. [Signals - Reaktif Programlama](#signals---reaktif-programlama)
+4. [Template Syntax](#template-syntax)
+5. [Event Binding](#event-binding)
+6. [Two-Way Binding](#two-way-binding)
+7. [Directives](#directives)
+8. [Uygulamamızın Mimarisi](#uygulamamızın-mimarisi)
+
+---
+
+
+## Angular'ın Temel Özellikleri:
+
+- **Component Tabanlı Mimari**: Uygulamayı küçük, yeniden kullanılabilir parçalara böleriz
+- **TypeScript**: Tip güvenliği sağlar
+- **Reaktif Programlama**: Signals ile modern reaktif state yönetimi
+- **Modüler Yapı**: Her şey modül ve component olarak organize edilir
+
+---
+
+## Component Yapısı
+
+Component, Angular'ın temel yapı taşıdır. Her component üç ana parçadan oluşur:
+
+### 1. TypeScript Dosyası (.ts)
+
+Component'in mantığını içerir.
+
+```typescript
+import { Component, signal } from '@angular/core';
+
+@Component({
+  selector: 'app-todo', // HTML'de nasıl kullanılacağı
+  imports: [CommonModule], // Kullanılacak modüller
+  templateUrl: './todo.component.html', // Template dosyası
+  styleUrl: './todo.component.css', // Stil dosyası
+})
+export class TodoComponent {
+  // Component mantığı buraya gelir
+}
+```
+
+**Açıklama:**
+
+- `@Component`: Bu class'ın bir Angular component'i olduğunu belirten decorator
+- `selector`: Bu component'i HTML'de `<app-todo></app-todo>` şeklinde kullanabiliriz
+- `imports`: Bu component'in kullanacağı diğer modüller ve component'ler
+- `templateUrl`: HTML şablonunun yolu
+- `styleUrl`: CSS dosyasının yolu
+
+### 2. HTML Template (.html)
+
+Component'in görünümünü tanımlar.
+
+```html
+<div class="todo-container">
+  <h1>Todo Uygulaması</h1>
+  <!-- İçerik buraya gelir -->
+</div>
+```
+
+### 3. CSS Dosyası (.css)
+
+Component'e özel stilleri içerir.
+
+```css
+.todo-container {
+  max-width: 600px;
+  margin: 40px auto;
+}
+```
+
+---
+
+## Signals - Reaktif Programlama
+
+Angular 21 ile gelen **Signals**, reaktif state yönetimi için modern bir yöntemdir.
+
+### Signal Nedir?
+
+Signal, değeri değiştiğinde otomatik olarak UI'yi güncelleyen reaktif bir veri türüdür.
+
+```typescript
+// Signal tanımlama
+todos = signal<Todo[]>([]);
+newTodoText = signal('');
+
+// Signal değerini okuma
+const text = this.newTodoText(); // () ile okunur
+
+// Signal değerini güncelleme
+this.newTodoText.set('Yeni değer'); // set() ile ayarlanır
+
+// Signal değerini update ile güncelleme
+this.todos.update((todos) => [...todos, newTodo]); // mevcut değere göre güncelle
+```
+
+### Neden Signal?
+
+**Geleneksel Yöntem:**
+
+```typescript
+// Eski yöntem - değişiklikler manuel takip edilir
+todos: Todo[] = [];
+
+addTodo() {
+  this.todos.push(newTodo);  // UI otomatik güncellenmeyebilir
+}
+```
+
+**Signal ile:**
+
+```typescript
+// Modern yöntem - değişiklikler otomatik takip edilir
+todos = signal<Todo[]>([]);
+
+addTodo() {
+  this.todos.update(todos => [...todos, newTodo]);  // UI otomatik güncellenir
+}
+```
+
+### Signal Metodları
+
+1. **set()**: Değeri tamamen değiştir
+
+```typescript
+this.newTodoText.set('Yeni metin');
+```
+
+2. **update()**: Mevcut değere göre güncelle
+
+```typescript
+this.todos.update((currentTodos) => [...currentTodos, newTodo]);
+```
+
+3. **()**: Değeri oku
+
+```typescript
+const todos = this.todos();
+```
+
+---
+
+## Template Syntax
+
+Angular template'leri HTML'in genişletilmiş halidir.
+
+### 1. Interpolation (İnterpolasyon)
+
+TypeScript'ten HTML'e veri aktarımı:
+
+```html
+<h1>{{ title }}</h1>
+<p>Aktif görev sayısı: {{ activeCount() }}</p>
+```
+
+### 2. Property Binding
+
+HTML özelliklerini dinamik olarak bağlama:
+
+```html
+<!-- Checkbox'ı todo.completed değerine göre işaretle -->
+<input type="checkbox" [checked]="todo.completed" />
+
+<!-- Class'ı koşullu ekle -->
+<li [class.completed]="todo.completed"></li>
+```
+
+**Kısa Yol:**
+
+```html
+<li [class.completed]="todo.completed">
+  <!-- Yukarıdaki şununla aynı: -->
+</li>
+
+<li [ngClass]="{ 'completed': todo.completed }"></li>
+```
+
+### 3. Event Binding
+
+Kullanıcı etkileşimlerini dinleme:
+
+```html
+<!-- Click eventi -->
+<button (click)="addTodo()">Ekle</button>
+
+<!-- Enter tuşu -->
+<input (keyup.enter)="addTodo()" />
+
+<!-- Change eventi -->
+<input type="checkbox" (change)="toggleTodo(todo.id)" />
+```
+
+---
+
+## Two-Way Binding
+
+İki yönlü veri bağlama, hem görünümden component'e hem de component'ten görünüme veri akışını sağlar.
+
+```html
+<!-- ngModel ile two-way binding -->
+<input [(ngModel)]="newTodoText" />
+```
+
+**Nasıl Çalışır?**
+
+```typescript
+// Component
+newTodoText = signal('');
+
+// HTML
+<input [(ngModel)]="newTodoText" />
+```
+
+1. Kullanıcı input'a "Angular öğren" yazar
+2. `newTodoText` otomatik olarak "Angular öğren" olur
+3. `newTodoText` değişirse, input'un değeri de değişir
+
+**ngModel Kullanımı İçin:**
+
+```typescript
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  imports: [FormsModule],  // FormsModule'ü import et
+})
+```
+
+---
+
+## Directives
+
+Directive'ler HTML elementlerine özel davranışlar ekler.
+
+### 1. Structural Directives
+
+#### @for - Döngü
+
+```html
+@for (todo of filteredTodos(); track todo.id) {
+<li>{{ todo.text }}</li>
+}
+```
+
+**Açıklama:**
+
+- `todo of filteredTodos()`: Her bir todo için döngü
+- `track todo.id`: Performance için her item'ı benzersiz id ile takip et
+
+#### @if - Koşullu Render
+
+```html
+@if (todos().length > 0) {
+<ul>
+  Todolar var
+</ul>
+} @else {
+<p>Henüz todo yok</p>
+}
+```
+
+#### @empty - Boş Liste
+
+```html
+@for (todo of todos(); track todo.id) {
+<li>{{ todo.text }}</li>
+} @empty {
+<li>Liste boş!</li>
+}
+```
+
+### 2. Attribute Directives
+
+#### ngClass - Dinamik Class
+
+```html
+<!-- Tek class -->
+<div [class.active]="isActive">
+  <!-- Çoklu class -->
+  <div
+    [ngClass]="{ 
+  'active': isActive, 
+  'disabled': isDisabled 
+}"
+  ></div>
+</div>
+```
+
+#### ngStyle - Dinamik Style
+
+```html
+<div
+  [ngStyle]="{ 
+  'color': isActive ? 'green' : 'red',
+  'font-size': fontSize + 'px' 
+}"
+></div>
+```
+
+---
+
+## Uygulamamızın Mimarisi
+
+### Interface Tanımlama
+
+TypeScript'te tip güvenliği için interface kullanırız:
+
+```typescript
+interface Todo {
+  id: number;
+  text: string;
+  completed: boolean;
+}
+```
+
+### State Yönetimi
+
+Todo uygulamasının state'i:
+
+```typescript
+export class TodoComponent {
+  // Tüm todolar
+  todos = signal<Todo[]>([{ id: 1, text: 'Angular öğren', completed: false }]);
+
+  // Yeni todo input değeri
+  newTodoText = signal('');
+
+  // Aktif filtre
+  filter = signal<'all' | 'active' | 'completed'>('all');
+}
+```
+
+### CRUD İşlemleri
+
+#### Create - Ekleme
+
+```typescript
+addTodo() {
+  const text = this.newTodoText().trim();
+  if (text) {
+    const newTodo: Todo = {
+      id: Date.now(),  // Unique ID için timestamp
+      text: text,
+      completed: false
+    };
+    // Mevcut todolara yeni todo'yu ekle
+    this.todos.update(todos => [...todos, newTodo]);
+    // Input'u temizle
+    this.newTodoText.set('');
+  }
+}
+```
+
+**Açıklama:**
+
+- `trim()`: Boşlukları temizle
+- `Date.now()`: Unique ID oluştur
+- `[...todos, newTodo]`: Spread operator ile yeni array oluştur (immutability)
+
+#### Read - Okuma ve Filtreleme
+
+```typescript
+filteredTodos() {
+  const filter = this.filter();
+  const todos = this.todos();
+
+  if (filter === 'active') {
+    return todos.filter(todo => !todo.completed);
+  } else if (filter === 'completed') {
+    return todos.filter(todo => todo.completed);
+  }
+  return todos;  // 'all'
+}
+```
+
+#### Update - Güncelleme
+
+```typescript
+toggleTodo(id: number) {
+  this.todos.update(todos =>
+    todos.map(todo =>
+      // İlgili todo'yu bul ve completed değerini tersine çevir
+      todo.id === id
+        ? { ...todo, completed: !todo.completed }
+        : todo
+    )
+  );
+}
+```
+
+**Açıklama:**
+
+- `map()`: Her todo için yeni bir obje oluştur
+- `...todo`: Spread operator ile mevcut özellikleri kopyala
+- `completed: !todo.completed`: completed'i tersine çevir
+
+#### Delete - Silme
+
+```typescript
+deleteTodo(id: number) {
+  this.todos.update(todos =>
+    todos.filter(todo => todo.id !== id)
+  );
+}
+```
+
+### Computed Values (Hesaplanan Değerler)
+
+```typescript
+// Aktif todo sayısı
+activeCount() {
+  return this.todos().filter(todo => !todo.completed).length;
+}
+
+// Tamamlanmış todo'ları temizle
+clearCompleted() {
+  this.todos.update(todos =>
+    todos.filter(todo => !todo.completed)
+  );
+}
+```
+
+---
+
+## Template'te Kullanım
+
+### Input ve Button
+
+```html
+<div class="todo-input-container">
+  <!-- Two-way binding ile input -->
+  <input
+    type="text"
+    [(ngModel)]="newTodoText"
+    (keyup.enter)="addTodo()"
+    placeholder="Ne yapacaksın?"
+  />
+  <!-- Click event -->
+  <button (click)="addTodo()">Ekle</button>
+</div>
+```
+
+### Filtre Butonları
+
+```html
+<div class="filters">
+  <button [class.active]="filter() === 'all'" (click)="setFilter('all')">Hepsi</button>
+  <button [class.active]="filter() === 'active'" (click)="setFilter('active')">Aktif</button>
+  <button [class.active]="filter() === 'completed'" (click)="setFilter('completed')">
+    Tamamlanan
+  </button>
+</div>
+```
+
+**Açıklama:**
+
+- `[class.active]`: filter değeri eşitse 'active' class'ını ekle
+- `(click)`: Tıklandığında filtreyi değiştir
+
+### Todo Listesi
+
+```html
+<ul class="todo-list">
+  @for (todo of filteredTodos(); track todo.id) {
+  <li [class.completed]="todo.completed">
+    <!-- Checkbox -->
+    <input type="checkbox" [checked]="todo.completed" (change)="toggleTodo(todo.id)" />
+    <!-- Todo metni -->
+    <span>{{ todo.text }}</span>
+    <!-- Sil butonu -->
+    <button (click)="deleteTodo(todo.id)">❌</button>
+  </li>
+  } @empty {
+  <li>Henüz todo yok! 🎉</li>
+  }
+</ul>
+```
+
+---
+
+## Component'leri Kullanma
+
+### 1. Component'i Import Et
+
+```typescript
+// app.ts
+import { TodoComponent } from './todo/todo.component';
+
+@Component({
+  imports: [TodoComponent],  // Component'i imports array'ine ekle
+})
+```
+
+### 2. Template'te Kullan
+
+```html
+<!-- app.html -->
+<app-todo></app-todo>
+```
+
+---
+
+## Best Practices (En İyi Pratikler)
+
+### 1. Immutability (Değişmezlik)
+
+```typescript
+// ❌ Yanlış - Array'i direkt değiştirme
+this.todos().push(newTodo);
+
+// ✅ Doğru - Yeni array oluştur
+this.todos.update((todos) => [...todos, newTodo]);
+```
+
+### 2. Type Safety (Tip Güvenliği)
+
+```typescript
+// ❌ Yanlış - Tip yok
+todos = signal([]);
+
+// ✅ Doğru - Interface ile tip tanımla
+todos = signal<Todo[]>([]);
+```
+
+### 3. Clean Code
+
+```typescript
+// ❌ Yanlış - Uzun, karmaşık method
+addTodo() {
+  if (this.newTodoText().trim() !== '') {
+    const t = {
+      id: Date.now(),
+      text: this.newTodoText().trim(),
+      completed: false
+    };
+    this.todos.update(x => [...x, t]);
+    this.newTodoText.set('');
+  }
+}
+
+// ✅ Doğru - Okunabilir, anlaşılır
+addTodo() {
+  const text = this.newTodoText().trim();
+  if (!text) return;
+
+  const newTodo: Todo = {
+    id: Date.now(),
+    text: text,
+    completed: false
+  };
+
+  this.todos.update(todos => [...todos, newTodo]);
+  this.newTodoText.set('');
+}
+```
+
+### 4. Track Function
+
+```html
+<!-- ❌ Yanlış - Index kullanma -->
+@for (todo of todos(); track $index) {
+
+<!-- ✅ Doğru - Unique ID kullan -->
+@for (todo of todos(); track todo.id) {
+```
+
+---
+
+## Sık Kullanılan Angular Methodları
+
+### Array Methodları
+
+```typescript
+// filter() - Filtreleme
+const activeTodos = todos.filter((todo) => !todo.completed);
+
+// map() - Dönüştürme
+const todoTexts = todos.map((todo) => todo.text);
+
+// find() - Bulma
+const todo = todos.find((todo) => todo.id === 1);
+
+// some() - Herhangi biri var mı?
+const hasActive = todos.some((todo) => !todo.completed);
+
+// every() - Hepsi mi?
+const allCompleted = todos.every((todo) => todo.completed);
+```
+
+### String Methodları
+
+```typescript
+// trim() - Boşlukları temizle
+const text = '  hello  '.trim(); // 'hello'
+
+// toLowerCase() - Küçük harf
+const lower = 'HELLO'.toLowerCase(); // 'hello'
+
+// includes() - İçeriyor mu?
+const hasAngular = text.includes('Angular'); // true/false
+```
+
+---
+
+## Özet
+
+Bu uygulamada öğrendiklerimiz:
+
+1. ✅ **Component Yapısı**: .ts, .html, .css dosyaları
+2. ✅ **Signals**: Reaktif state yönetimi
+3. ✅ **Template Syntax**: Interpolation, binding
+4. ✅ **Event Binding**: Click, keyup gibi eventler
+5. ✅ **Two-Way Binding**: ngModel kullanımı
+6. ✅ **Directives**: @for, @if, @empty, ngClass
+7. ✅ **CRUD İşlemleri**: Create, Read, Update, Delete
+8. ✅ **TypeScript**: Interface, tip güvenliği
+9. ✅ **Immutability**: Spread operator kullanımı
+10. ✅ **Best Practices**: Temiz, okunabilir kod
+
+---
+
+## Sonraki Adımlar
+
+Bu temel bilgilerle şunları öğrenebilirsiniz:
+
+- **Services**: Veri paylaşımı ve business logic
+- **HTTP Client**: API'lerle iletişim
+- **Routing**: Sayfa geçişleri
+- **Forms**: Reactive ve Template-driven forms
+- **RxJS**: Observable'lar ve operatörler
+- **State Management**: NgRx veya diğer state management çözümleri
+
+Mutlu kodlamalar! 🚀
