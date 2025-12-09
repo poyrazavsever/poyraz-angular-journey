@@ -1,0 +1,142 @@
+<div class="container">
+  <!-- Başlık -->
+  <header class="header">
+    <h1>{{ title() }}</h1>
+    <p class="subtitle">Kredi bilgilerinizi girin ve detaylı ödeme planınızı görün</p>
+  </header>
+
+  <!-- Ana Kart -->
+  <div class="card">
+    <!-- Girdi Formu -->
+    <div class="form-section">
+      <h2 class="section-title">Kredi Bilgileri</h2>
+
+      <div class="form-grid">
+        <!-- Kredi Tutarı -->
+        <div class="input-group">
+          <label class="label">
+            <span class="label-icon">💵</span>
+            Kredi Tutarı
+          </label>
+          <input
+            type="number"
+            [(ngModel)]="loanAmount"
+            name="loanAmount"
+            (ngModelChange)="onInputChange()"
+            class="input"
+            placeholder="100000"
+            min="0"
+          />
+          <span class="input-info">{{ loanAmount() | number : '1.0-0' }} ₺</span>
+        </div>
+
+        <!-- Faiz Oranı -->
+        <div class="input-group">
+          <label class="label">
+            <span class="label-icon">📊</span>
+            Aylık Faiz Oranı
+          </label>
+          <input
+            type="number"
+            [(ngModel)]="interestRate"
+            name="interestRate"
+            (ngModelChange)="onInputChange()"
+            class="input"
+            placeholder="1.5"
+            min="0"
+            step="0.1"
+          />
+          <span class="input-info">% {{ interestRate() | number : '1.2-2' }}</span>
+        </div>
+
+        <!-- Vade -->
+        <div class="input-group">
+          <label class="label">
+            <span class="label-icon">📅</span>
+            Vade Süresi
+          </label>
+          <input
+            type="number"
+            [(ngModel)]="loanTerm"
+            name="loanTerm"
+            (ngModelChange)="onInputChange()"
+            class="input"
+            placeholder="12"
+            min="1"
+          />
+          <span class="input-info">{{ loanTerm() }} ay</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Özet Sonuçlar -->
+    <div class="results-section">
+      <h2 class="section-title">Ödeme Özeti</h2>
+
+      <div class="results-grid">
+        <div class="result-card monthly">
+          <div class="result-label">Aylık Ödeme</div>
+          <div class="result-value">{{ monthlyPayment() | number : '1.2-2' }} ₺</div>
+        </div>
+
+        <div class="result-card total">
+          <div class="result-label">Toplam Ödeme</div>
+          <div class="result-value">{{ totalPayment() | number : '1.2-2' }} ₺</div>
+        </div>
+
+        <div class="result-card interest">
+          <div class="result-label">Toplam Faiz</div>
+          <div class="result-value">{{ totalInterest() | number : '1.2-2' }} ₺</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ödeme Tablosu -->
+    <div class="table-section">
+      <h2 class="section-title">Aylık Ödeme Planı</h2>
+
+      <div class="table-container">
+        <table class="payment-table">
+          <thead>
+            <tr>
+              <th>Ay</th>
+              <th>Aylık Ödeme</th>
+              <th>Anapara</th>
+              <th>Faiz</th>
+              <th>Kalan Borç</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (payment of paymentSchedule(); track payment.month) {
+            <tr>
+              <td class="month-cell">{{ payment.month }}</td>
+              <td class="amount">{{ payment.payment | number : '1.2-2' }} ₺</td>
+              <td class="principal">{{ payment.principal | number : '1.2-2' }} ₺</td>
+              <td class="interest-amount">{{ payment.interest | number : '1.2-2' }} ₺</td>
+              <td class="remaining">{{ payment.remainingBalance | number : '1.2-2' }} ₺</td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Açıklama -->
+      <div class="info-box">
+        <p>
+          <strong>📌 Nasıl Okunur?</strong><br />
+          <span class="info-item"
+            ><strong>Aylık Ödeme:</strong> Her ay ödeyeceğiniz sabit tutar</span
+          >
+          <span class="info-item"><strong>Anapara:</strong> Borcunuzu azaltan kısım</span>
+          <span class="info-item"><strong>Faiz:</strong> Bankaya ödediğiniz kısım</span>
+          <span class="info-item"><strong>Kalan Borç:</strong> Ödeme sonrası kalan tutar</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Alt Bilgi -->
+  <footer class="footer">
+    <p>* Bu hesaplama tahmini bir değerdir. Gerçek değerler farklılık gösterebilir.</p>
+  </footer>
+</div>
