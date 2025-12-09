@@ -11,6 +11,7 @@ interface Todo {
 
 @Component({
   selector: 'app-todo',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './todo.component.html',
   styleUrl: './todo.component.css',
