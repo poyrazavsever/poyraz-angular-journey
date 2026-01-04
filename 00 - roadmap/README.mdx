@@ -1,0 +1,75 @@
+# Bu repo nasıl kullanılır?
+
+Bu repo “notlar + mini projeler” şeklinde ilerleyen bir Angular öğrenme günlüğü.
+Fork’ladıysan, aşağıdaki düzeni takip ederek hem konuları sırayla öğrenebilir hem de kendi notlarını düzenli şekilde biriktirebilirsin.
+
+## Hızlı başlangıç
+
+1. Yol haritasını aç: `roadmap.mdx`
+2. `01 - basics` klasöründeki notları sırasıyla oku (dosya adları zaten numaralı)
+3. Uygulama tarafında `first-app` ve `loan-calculator` projelerini çalıştırarak “yaparak öğren” kısmını tamamla
+
+## Klasör yapısı
+
+- `00 - roadmap/`
+
+  - `roadmap.mdx`: Ana yol haritası. Hangi sırayla ilerleyeceğini buradan takip et.
+  - `README.mdx`: Bu düzenin kısa açıklaması (bu dosya).
+
+- `01 - basics/`
+  - `00 - spa.mdx`, `01 - typescript.mdx`, ...: Konu notları.
+  - `first-app/`: Angular temellerini öğrenirken ilerlettiğimiz mini proje.
+  - `loan-calculator/`: Daha “ürün gibi” düşünerek geliştireceğimiz mini proje.
+
+## Not yazma standardı
+
+Notların başında bir “frontmatter” bloğu var. Yeni bir not eklerken aynı formatı kullan:
+
+```md
+---
+title: "Konu başlığı"
+description: "1-2 cümlelik özet"
+date: "YYYY-MM-DD"
+author: "İsmin"
+level: "beginner | intermediate | advanced"
+category: "Angular Basics | RxJS | Testing | ..."
+tags:
+  - angular
+  - learning
+---
+
+# Başlık
+
+Kısa giriş...
+```
+
+Pratik kural: Bir konuya çalıştıktan sonra 10–20 satır “kendi cümlelerinle” özet geç. Sonra küçük bir “Yap” maddesi ekle.
+
+## Dosya isimlendirme
+
+- Konu notlarını numaralı tutuyoruz: `00 - ...`, `01 - ...`, `02 - ...`
+- Bu sayede GitHub’da klasör açıldığında “okuma sırası” otomatik oluşuyor.
+
+## Mini projeleri çalıştırma
+
+Bu repo içinde birden fazla Angular projesi var. Her projeyi kendi klasöründe çalıştır:
+
+- `01 - basics/first-app`
+- `01 - basics/loan-calculator`
+
+Genel akış:
+
+1. Bağımlılıkları kur: `npm install` (veya `pnpm install`)
+2. Dev server: `npm start` ya da `ng serve`
+
+Not: Komut isimleri projedeki `package.json` scripts bölümüne göre değişebilir.
+
+## Katkı / kendi fork’unda ilerleme
+
+Bu repo bir “öğrenme günlüğü” olduğu için en iyi katkı:
+
+- Kendi notlarını eklemek
+- Anlamadığın yerleri soruya çevirip not düşmek
+- Mini projelerde öğrendiğin konsepti küçük bir commit ile göstermek
+
+İstersen en sona bir de `changelog` gibi “bugün ne öğrendim?” bölümü ekleyebilirsin.
