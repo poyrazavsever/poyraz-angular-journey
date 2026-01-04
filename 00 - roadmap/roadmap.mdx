@@ -1,0 +1,566 @@
+# Angular Öğrenme Yol Haritası (Detaylı)
+
+Bu repo bir “öğrenme günlüğü + mini projeler” gibi ilerlesin diye tasarlandı. Aşağıdaki planı takip edersen, hem Angular’ı öğrenmiş olursun hem de elinde düzgün bir portföy birikir.
+
+Hedef: Angular ile modern, test edilebilir, performanslı bir SPA geliştirebilmek; gerektiğinde SSR/SSG, i18n, erişilebilirlik, deploy ve bakım süreçlerini yönetebilmek.
+
+## Nasıl kullanacaksın?
+
+- Her bölümde “Öğren”, “Yap”, “Kontrol et” var. Gerçek öğrenme “Yap” kısmında oluyor.
+- Bir bölümü bitirmeden önce “Kontrol listesi”ni geç.
+- Zorlandığın yerde kısa not al (bu repo zaten bunun için).
+- İlerleme temposu: günde 45–90 dk ile 6–10 haftada sağlam temele oturur; daha yoğun çalışırsan hızlanır.
+
+## Ön Koşullar ve Kurulum
+
+### 0.1 Temel ön koşullar
+
+Angular öğrenirken en çok zorlayan kısım Angular değil; JavaScript/TypeScript ve DOM mantığı.
+
+Şunlara orta seviyede hakim olman işini kolaylaştırır:
+
+- JavaScript: `const/let`, scope, closure, `this`, prototype, module sistemi (ESM), async/await
+- TypeScript: type inference, union/intersection, generics, utility types, narrowing
+- HTML/CSS: semantic HTML, layout (flex/grid), responsive
+
+### 0.2 Araçlar
+
+- Node.js (LTS)
+- npm veya pnpm
+- VS Code
+
+### 0.3 Repo içi önerilen çalışma düzeni
+
+- Notları MDX dosyalarında tut
+- Her konu sonunda mini egzersiz ekle
+- Projeleri `01 - basics/first-app` ve `01 - basics/loan-calculator` üzerinden büyüt
+
+## 1) Temel Web Mantığı (Hızlı ama sağlam)
+
+### 1.1 SPA nedir, neden önemli?
+
+Öğren:
+
+- SPA vs MPA farkı
+- Client-side routing
+- Bundle, lazy load, caching
+
+Yap:
+
+- Basit bir HTML dosyasında hash-based routing simülasyonu yap
+
+Kontrol listesi:
+
+- SPA’da sayfa yenilenmeden route değişiminin mantığını açıklayabiliyorum
+
+### 1.2 TypeScript temeli (Angular için kritik)
+
+Öğren:
+
+- Interface vs type
+- Class, access modifiers, readonly
+- Generics (özellikle `Observable<T>` mantığı için)
+- `unknown` vs `any`
+
+Yap:
+
+- Bir “Todo” modelini type-safe yaz: `Todo`, `CreateTodo`, `UpdateTodo`
+- Bir `Result<T>` (success/error) tipi tasarla
+
+Kontrol listesi:
+
+- Bir fonksiyonun input/output tipini güvenli şekilde kurabiliyorum
+
+## 2) Angular’a Giriş (Modern Angular yaklaşımı)
+
+Not: Angular ekosistemi son yıllarda “standalone” yaklaşımıyla sadeleşti. Bu repo yapısı da buna uygun.
+
+### 2.1 Angular mental modeli
+
+Öğren:
+
+- Component tabanlı yapı
+- Template + Component class ayrımı
+- Dependency Injection (DI) mantığı
+- Change detection’in temel fikri
+
+Yap:
+
+- `first-app` projesini çalıştır
+- `app.ts / app.html` dosyalarında temel render akışını takip et
+
+Kontrol listesi:
+
+- Component’in ne olduğunu ve neden var olduğunu 2 cümleyle anlatabiliyorum
+
+### 2.2 Angular CLI ve proje yapısı
+
+Öğren:
+
+- `ng serve`, `ng build`, `ng test`
+- `angular.json` temel kavramlar
+- `environment` yönetimi (basit düzey)
+
+Yap:
+
+- Yeni bir component oluştur ve route’a bağla
+
+Kontrol listesi:
+
+- CLI ile component yaratıp uygulamaya entegre edebiliyorum
+
+## 3) Template Temelleri
+
+### 3.1 Binding türleri
+
+Öğren:
+
+- Interpolation: `{{ value }}`
+- Property binding: `[value]="..."`
+- Event binding: `(click)="..."`
+- Two-way binding (Forms ile): `[(ngModel)]`
+
+Yap:
+
+- Bir sayaç component’i: artır/azalt/sıfırla
+- Bir input’a yazılan metni anlık göster
+
+Kontrol listesi:
+
+- Hangi binding’in hangi yönde çalıştığını biliyorum
+
+### 3.2 Direktifler (Control Flow)
+
+Öğren:
+
+- Yapısal direktif mantığı (listeleme/koşul)
+- Angular’ın modern control flow sözdizimi varsa onu da tanı (sürümüne göre)
+- Track-by mantığı (liste performansı)
+
+Yap:
+
+- Todo listesi: ekle/sil/tamamlandı işaretle
+
+Kontrol listesi:
+
+- Liste render ederken performans için track stratejisini konuşabiliyorum
+
+### 3.3 Pipe’lar
+
+Öğren:
+
+- Built-in pipes
+- Custom pipe yazma
+- Pure vs impure pipe farkı
+
+Yap:
+
+- Todo’larda filtre pipe’ı: “tamamlananları gizle”
+
+Kontrol listesi:
+
+- Pipe ile component logic’ini ne zaman ayırmam gerektiğini biliyorum
+
+## 4) Component İletişimi ve UI Tasarımı
+
+### 4.1 Input/Output
+
+Öğren:
+
+- Parent → Child: `@Input()`
+- Child → Parent: `@Output()` ve event emitter
+
+Yap:
+
+- TodoItem component’i: tek item göster, toggle/sil event’i yolla
+
+Kontrol listesi:
+
+- State’in nerede durması gerektiği konusunda karar verebiliyorum
+
+### 4.2 Content projection
+
+Öğren:
+
+- `ng-content` mantığı
+
+Yap:
+
+- Basit bir `Card` component’i yap ve içine içerik projekte et
+
+Kontrol listesi:
+
+- Tekrarlanan UI parçalarını componentleştirebiliyorum
+
+## 5) Servisler, DI ve Uygulama Mimarisi
+
+### 5.1 Dependency Injection
+
+Öğren:
+
+- Service neden var?
+- Provider scope (uygulama vs component)
+- Injection token kavramı (temel)
+
+Yap:
+
+- Todo verisini bir `TodoService` içine al
+- “Mock data” sağlayan bir servis ve gerçek API’ye geçiş için hazırlık
+
+Kontrol listesi:
+
+- Component’te iş kuralını azaltıp servise taşıyabiliyorum
+
+### 5.2 Uygulama klasörleme yaklaşımı
+
+Öğren:
+
+- Feature-based structure
+- Shared UI vs feature logic ayrımı
+
+Yap:
+
+- Todo feature klasörünü düzenle: model, service, components
+
+Kontrol listesi:
+
+- Dosyaları büyüyen projede “bulunabilir” şekilde organize edebiliyorum
+
+## 6) Routing
+
+### 6.1 Temel routing
+
+Öğren:
+
+- Route tanımı
+- Parametreler (`/todos/:id`)
+- Query params
+
+Yap:
+
+- “Todo detay” sayfası: id ile todo getir
+
+Kontrol listesi:
+
+- Parametre ve query param farkını biliyorum
+
+### 6.2 Lazy loading
+
+Öğren:
+
+- Feature route’ları lazy load etmek
+- Preloading stratejisi (temel)
+
+Yap:
+
+- Todo feature’ını lazy load yap
+
+Kontrol listesi:
+
+- Build çıktısında bundle ayrımının mantığını açıklayabiliyorum
+
+### 6.3 Guard ve resolver (gerektiği kadar)
+
+Öğren:
+
+- Auth guard mantığı
+- Resolver ile data preload fikri
+
+Yap:
+
+- Basit “login var/yok” guard simülasyonu
+
+Kontrol listesi:
+
+- Route’a girmeden önce kontrol yaptırabiliyorum
+
+## 7) Forms
+
+### 7.1 Template-driven forms (hızlı giriş)
+
+Öğren:
+
+- `ngModel`
+- Basit validasyonlar
+
+Yap:
+
+- Todo ekleme formu: required, minLength
+
+Kontrol listesi:
+
+- Basit formu hızlıca çıkarabiliyorum
+
+### 7.2 Reactive forms (gerçek dünya standardı)
+
+Öğren:
+
+- `FormControl`, `FormGroup`, `FormArray`
+- Synchronous & async validators
+- ValueChanges
+
+Yap:
+
+- “Todo edit” formu
+- Custom validator: “başlık benzersiz olsun” (mock data üzerinden)
+
+Kontrol listesi:
+
+- Karmaşık formları reactive yaklaşımla yönetebiliyorum
+
+## 8) HTTP, API Entegrasyonu ve Hata Yönetimi
+
+### 8.1 HttpClient
+
+Öğren:
+
+- GET/POST/PUT/PATCH/DELETE
+- Interceptor mantığı
+- Retry/backoff fikri (temel)
+
+Yap:
+
+- JSONPlaceholder gibi bir fake API ile todo çek (veya kendi mock server’ın)
+- Loading/error state’leri göster
+
+Kontrol listesi:
+
+- API hatasında kullanıcıya doğru mesajı gösterebiliyorum
+
+### 8.2 Ortam değişkenleri
+
+Öğren:
+
+- Dev/prod ayrımı
+- API base URL yönetimi
+
+Yap:
+
+- Base URL’yi tek yerden yönet
+
+Kontrol listesi:
+
+- Ortam bazlı ayarları karıştırmadan yönetebiliyorum
+
+## 9) RxJS ve Reaktif Düşünme
+
+Angular’da özellikle HTTP, form olayları ve state yönetimi RxJS ile çok güçlenir.
+
+### 9.1 RxJS temel
+
+Öğren:
+
+- Observable vs Promise
+- `pipe`, `map`, `switchMap`, `mergeMap`, `concatMap`
+- `tap`, `catchError`, `finalize`
+- `Subject`, `BehaviorSubject`
+
+Yap:
+
+- Arama kutusu: debounce + switchMap ile API araması
+- Cancel edilen istekleri gözlemle
+
+Kontrol listesi:
+
+- Neden `switchMap` aramada daha uygun, açıklayabiliyorum
+
+### 9.2 Subscription yönetimi
+
+Öğren:
+
+- Memory leak riskleri
+- Async pipe
+- `takeUntil` yaklaşımı
+
+Yap:
+
+- Component’te subscription’ları güvenli kapat
+
+Kontrol listesi:
+
+- Leak oluşturmadan observable kullanabiliyorum
+
+## 10) State Yönetimi (Basit başlayıp büyüt)
+
+### 10.1 Lokal state
+
+Öğren:
+
+- State’i component’te tutmak
+- Shared state’i servise taşımak
+
+Yap:
+
+- Todo state’ini `BehaviorSubject` ile servis içinde yönet
+
+Kontrol listesi:
+
+- “Tek kaynak” prensibini uygulayabiliyorum
+
+### 10.2 Daha büyük state (opsiyonel ama önerilir)
+
+Öğren:
+
+- NgRx gibi store yaklaşımı
+- Action/reducer/effect konsepti (temel)
+
+Yap:
+
+- Küçük bir feature için store denemesi (abartmadan)
+
+Kontrol listesi:
+
+- Store ne zaman gerekli, ne zaman gereksiz ayırt edebiliyorum
+
+## 11) Modern Angular: Signals (Konsept olarak)
+
+Angular’daki “signals” yaklaşımını temel seviyede bilmek artık önemli.
+
+Öğren:
+
+- Signal ile state tutma fikri
+- Computed state
+- Effect
+
+Yap:
+
+- Sayaç veya todo filtre state’ini signal ile yönetmeyi dene
+
+Kontrol listesi:
+
+- Observable ile signal farkını kabaca anlatabiliyorum
+
+## 12) Performans ve Mühendislik Kalitesi
+
+### 12.1 Change detection ve optimizasyon
+
+Öğren:
+
+- Neden gereksiz re-render olur?
+- OnPush yaklaşımı (konsept)
+- TrackBy
+
+Yap:
+
+- Büyük listede performans farkını gözlemle
+
+Kontrol listesi:
+
+- Performans sorununu teşhis etmek için nereden başlayacağımı biliyorum
+
+### 12.2 Erişilebilirlik (a11y)
+
+Öğren:
+
+- Semantic HTML
+- Focus yönetimi
+- ARIA’yı “gerektiği kadar” kullanma
+
+Yap:
+
+- Form hatalarını screen reader dostu göster
+
+Kontrol listesi:
+
+- Klavye ile uygulama kullanılabiliyor
+
+### 12.3 Güvenlik (temel hijyen)
+
+Öğren:
+
+- XSS riskleri
+- Template sanitization mantığı
+- Güvenli URL/HTML render
+
+Kontrol listesi:
+
+- Kullanıcıdan gelen HTML’i direkt basmanın riskli olduğunu biliyorum
+
+## 13) Test
+
+### 13.1 Unit test
+
+Öğren:
+
+- Component test mantığı
+- Service test mantığı
+- Mock ve spy
+
+Yap:
+
+- TodoService için unit test
+- TodoItem component’i için temel render + click testi
+
+Kontrol listesi:
+
+- En kritik iş kurallarını testle yakalayabiliyorum
+
+### 13.2 E2E test (opsiyonel)
+
+Öğren:
+
+- Kullanıcı akışı testleri
+
+Yap:
+
+- “Todo ekle ve listede gör” senaryosu
+
+## 14) Build, Deploy ve Üretim Pratikleri
+
+### 14.1 Production build
+
+Öğren:
+
+- Build çıktıları
+- Lazy chunk’lar
+- Source map yönetimi
+
+Yap:
+
+- Prod build al, bundle boyutlarına bak
+
+Kontrol listesi:
+
+- Deploy öncesi hangi kontrolleri yapacağımı biliyorum
+
+### 14.2 Deploy
+
+Yap:
+
+- Static hosting (Netlify/Vercel/GitHub Pages) gibi bir yere deploy et
+- SPA routing için rewrite ayarı gerektiğini not al
+
+Kontrol listesi:
+
+- Route’lar deploy sonrası 404 yemeden çalışıyor
+
+## 15) Büyük Mini Proje: Loan Calculator’ı “Gerçek Uygulama”ya Çevir
+
+Elinde zaten `loan-calculator` var. Bunu öğrenme projesinden “gerçek ürün” tadına yaklaştıralım.
+
+Önerilen backlog:
+
+- Formu reactive forms ile kur
+- Validasyonlar: tutar, vade, faiz
+- Sonuç ekranı: aylık ödeme, toplam geri ödeme
+- “Hesaplama geçmişi” (localStorage)
+- Basit testler
+
+## 16) Portföy için 3 küçük proje fikri (kısa)
+
+- Mini CRM: liste + detay + filtre + API
+- Not uygulaması: offline-first (localStorage/IndexedDB) + sync simülasyonu
+- Dashboard: chart + lazy loaded feature + guard
+
+## Bitirme Kriterleri (Kendini test et)
+
+Aşağıdakileri rahatça yapabiliyorsan Angular’da sağlam noktadasın:
+
+- Standalone component ile feature kurup route’a bağlayabiliyorum
+- Reactive forms ile validasyon ve custom validator yazabiliyorum
+- HttpClient + interceptor + hata yönetimini oturtabiliyorum
+- Observable zincirlerinde `switchMap/catchError/finalize` doğru kullanıyorum
+- Basit state’i servis/signal/store ile yönetip UI’yı sade tutuyorum
+- En azından kritik servis/component için unit test yazabiliyorum
+- Prod build alıp deploy edebiliyorum
+
